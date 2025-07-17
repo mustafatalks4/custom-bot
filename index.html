@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MustafaTalks - Your Personal AI Skill & Earning Advisor</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Animate on Scroll (AOS) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Styles for Premium Look -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #cbd5e1; /* Slate 300 */
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #818cf8, #fb7185); /* Indigo-300 to Rose-400 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glow-button {
+            box-shadow: 0 0 15px rgba(251, 113, 133, 0.4), 0 0 30px rgba(129, 140, 248, 0.3);
+        }
+        .animated-card {
+            background: rgba(30, 41, 59, 0.5); /* Slate 800 with transparency */
+            border: 1px solid #334155; /* Slate 700 */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            animation: float 6s ease-in-out infinite;
+        }
+        .animated-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+            animation-play-state: paused;
+        }
+        /* Staggering the animation delay for cards */
+        .animated-card:nth-child(2) {
+            animation-delay: 2s;
+        }
+        .animated-card:nth-child(3) {
+            animation-delay: 4s;
+        }
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .faq-item .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(45deg);
+        }
+        .faq-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .grid-bg {
+            background-image:
+                linear-gradient(to right, rgba(51, 65, 85, 0.5) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(51, 65, 85, 0.5) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+        }
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="text-slate-300">
+
+    <!-- 1. Navbar (Sticky Top) -->
+    <nav id="navbar" class="fixed top-0 z-50 w-full bg-slate-900/80 backdrop-blur-md border-b border-slate-700/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="font-black text-2xl tracking-tighter">
+                    <span class="gradient-text">MustafaTalks</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#roadmap" class="text-slate-300 hover:text-white transition-colors">Roadmap</a>
+                    <a href="#testimonials" class="text-slate-300 hover:text-white transition-colors">Testimonials</a>
+                    <a href="#faq" class="text-slate-300 hover:text-white transition-colors">FAQ</a>
+                </div>
+                <div class="hidden md:block">
+                    <a href="https://box.boodle.ai/a/@Mustafatalks" target="_blank" class="bg-indigo-500 text-white px-5 py-2.5 rounded-full font-bold hover:bg-indigo-600 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transform hover:-translate-y-0.5 transition-all duration-300">
+                        Try Now
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-300 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-700/50">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#roadmap" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Roadmap</a>
+                <a href="#testimonials" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">Testimonials</a>
+                <a href="#faq" class="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800">FAQ</a>
+                <a href="https://box.boodle.ai/a/@Mustafatalks" target="_blank" class="block w-full text-center mt-2 bg-indigo-500 text-white px-4 py-2 rounded-md font-bold hover:bg-indigo-600">Try Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-28 text-center overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-50"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900 to-transparent"></div>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div data-aos="fade-up">
+                <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tighter text-white">
+                    Unsure What Skill to Learn or <span class="gradient-text">How to Start Earning?</span>
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-slate-400 max-w-2xl mx-auto">
+                    Let our AI bot craft a personalized roadmap based on your unique goals. Stop guessing, start achieving.
+                </p>
+            </div>
+            <div class="mt-10" data-aos="fade-up" data-aos-delay="200">
+                <a href="https://box.boodle.ai/a/@Mustafatalks" target="_blank" class="inline-block bg-rose-500 text-white px-10 py-4 rounded-full text-xl font-bold hover:bg-rose-600 shadow-xl shadow-rose-500/20 hover:shadow-rose-500/40 transform hover:-translate-y-1 transition-all duration-300">
+                    🎯 Get Your Free Roadmap
+                </a>
+                <p class="mt-4 text-sm text-slate-500">No signup required. Instant results.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="py-12 bg-slate-900" data-aos="fade-up">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm font-semibold text-slate-400 tracking-wider uppercase">POWERING THE NEXT GENERATION OF EARNERS</p>
+            <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-slate-500 transition-colors hover:text-slate-300">Innovate AI</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-slate-500 transition-colors hover:text-slate-300">QuantumLeap</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-slate-500 transition-colors hover:text-slate-300">DataSphere</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-2xl font-bold text-slate-500 transition-colors hover:text-slate-300">NextGen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. NEW Roadmap Section -->
+    <section id="roadmap" class="py-20 md:py-28 bg-slate-900/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Your Personalized Roadmap</h2>
+                <p class="text-slate-400 mt-3 max-w-2xl mx-auto">From confusion to clarity in three simple steps. Here's how we craft your unique path to success.</p>
+            </div>
+            <div class="relative">
+                <!-- Dotted connecting line for desktop -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 border-t-2 border-dashed border-slate-700 -translate-y-1/2"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+                    <!-- Step 1 -->
+                    <div class="text-center relative" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center justify-center h-20 w-20 rounded-full bg-slate-800 border-2 border-indigo-500 text-indigo-400 mx-auto mb-5 shadow-lg">
+                            <span class="text-3xl font-bold">1</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-white">Tell Us Your Goals</h3>
+                        <p class="text-slate-400">Answer a few simple questions about your interests, how much time you have, and what you want to achieve.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="text-center relative" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center justify-center h-20 w-20 rounded-full bg-slate-800 border-2 border-rose-500 text-rose-400 mx-auto mb-5 shadow-lg">
+                            <span class="text-3xl font-bold">2</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-white">AI-Powered Analysis</h3>
+                        <p class="text-slate-400">Our intelligent bot analyzes your answers, matching your profile against thousands of successful paths.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="text-center relative" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center justify-center h-20 w-20 rounded-full bg-slate-800 border-2 border-emerald-500 text-emerald-400 mx-auto mb-5 shadow-lg">
+                            <span class="text-3xl font-bold">3</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2 text-white">Receive Your Custom Plan</h3>
+                        <p class="text-slate-400">Get a detailed, step-by-step roadmap with skills to learn, monetization methods, and curated resources.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Testimonial Section -->
+    <section id="testimonials" class="py-20 md:py-28 bg-slate-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Don't Just Take Our Word For It</h2>
+                <p class="text-slate-400 mt-3">See how we've helped others find clarity and success.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="animated-card p-8 rounded-2xl" data-aos="fade-right">
+                    <p class="text-slate-300">"I was completely lost. MustafaTalks gave me a clear path for learning video editing and landing my first client on Upwork within a month. Incredible!"</p>
+                    <div class="mt-6 flex items-center">
+                        <img class="w-12 h-12 rounded-full object-cover" src="https://placehold.co/100x100/334155/e2e8f0?text=AS" alt="User Avatar">
+                        <div class="ml-4">
+                            <p class="font-semibold text-white">Ali S.</p>
+                            <p class="text-sm text-slate-400">Freelance Video Editor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="animated-card p-8 rounded-2xl" data-aos="fade-up">
+                    <p class="text-slate-300">"The best part is the resource list. I didn't have to waste time searching. The bot provided the best free courses to get me started with graphic design."</p>
+                    <div class="mt-6 flex items-center">
+                        <img class="w-12 h-12 rounded-full object-cover" src="https://placehold.co/100x100/334155/e2e8f0?text=FK" alt="User Avatar">
+                        <div class="ml-4">
+                            <p class="font-semibold text-white">Fatima K.</p>
+                            <p class="text-sm text-slate-400">Aspiring Designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="animated-card p-8 rounded-2xl" data-aos="fade-left">
+                    <p class="text-slate-300">"From 'what should I learn?' to having a full content strategy for my tech YouTube channel. This bot is a game-changer for anyone feeling stuck."</p>
+                    <div class="mt-6 flex items-center">
+                        <img class="w-12 h-12 rounded-full object-cover" src="https://placehold.co/100x100/334155/e2e8f0?text=DH" alt="User Avatar">
+                        <div class="ml-4">
+                            <p class="font-semibold text-white">David H.</p>
+                            <p class="text-sm text-slate-400">Tech YouTuber</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 md:py-28 bg-slate-900/50">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Frequently Asked Questions</h2>
+            </div>
+            <div class="space-y-4" data-aos="fade-up">
+                <div class="faq-item bg-slate-800 rounded-lg border border-slate-700">
+                    <button class="faq-question w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-white">Is this really free?</span>
+                        <span class="faq-icon text-indigo-400 text-2xl font-light">+</span>
+                    </button>
+                    <div class="faq-answer px-5 text-slate-400">
+                        Yes, absolutely. Our core roadmap generation is completely free to use. Our goal is to provide value and help you find direction. We may offer premium services in the future.
+                    </div>
+                </div>
+                <div class="faq-item bg-slate-800 rounded-lg border border-slate-700">
+                    <button class="faq-question w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-white">How is MustafaTalks different from ChatGPT?</span>
+                        <span class="faq-icon text-indigo-400 text-2xl font-light">+</span>
+                    </button>
+                    <div class="faq-answer px-5 text-slate-400">
+                        While built on powerful AI, MustafaTalks is specifically trained for career and skill guidance. It provides structured, actionable roadmaps with curated resources, not just generic information.
+                    </div>
+                </div>
+                <div class="faq-item bg-slate-800 rounded-lg border border-slate-700">
+                    <button class="faq-question w-full text-left p-5 flex justify-between items-center">
+                        <span class="text-lg font-semibold text-white">How long does it take to get my roadmap?</span>
+                        <span class="faq-icon text-indigo-400 text-2xl font-light">+</span>
+                    </button>
+                    <div class="faq-answer px-5 text-slate-400">
+                        You'll get your personalized roadmap instantly. The process of answering a few questions about yourself takes less than 5 minutes.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Custom Bot Development Section -->
+    <section id="custom-bot" class="py-20 md:py-28 bg-slate-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="animated-card rounded-2xl p-8 md:p-12 text-center" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Want to Develop Your Own Custom Bot?</h2>
+                <p class="text-slate-400 mt-4 max-w-2xl mx-auto">Leverage AI for your business. We can help you build a custom chatbot tailored to your specific needs, from customer service to lead generation.</p>
+                <a href="https://tinyurl.com/custom-chatbot" target="_blank" class="mt-8 inline-block bg-emerald-500 text-white px-8 py-3 rounded-full text-lg font-bold hover:bg-emerald-600 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 transform hover:-translate-y-0.5 transition-all duration-300">
+                    Contact Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section id="try" class="bg-slate-900/50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="relative text-center rounded-2xl p-10 md:p-16 overflow-hidden" data-aos="zoom-in">
+                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-rose-500 opacity-90"></div>
+                <div class="relative">
+                    <h2 class="text-3xl md:text-4xl font-black text-white">Stop Wondering. Start Doing.</h2>
+                    <p class="mt-4 text-lg text-indigo-100 max-w-xl mx-auto">Your personalized strategy is one click away. Get the clarity and direction you need in the next 5 minutes.</p>
+                    <a href="https://box.boodle.ai/a/@Mustafatalks" target="_blank" class="mt-8 inline-block bg-white text-indigo-600 px-8 py-4 rounded-xl text-lg font-bold hover:bg-slate-100 transform hover:scale-105 transition-all duration-300">
+                        Get Your Personalized Strategy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-500">
+            <p>&copy; <span id="year"></span> MustafaTalks. All rights reserved.</p>
+            <p class="text-sm mt-1">A tool to help you navigate your career with confidence.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const wasOpen = item.classList.contains('open');
+                faqItems.forEach(i => i.classList.remove('open'));
+                if (!wasOpen) {
+                    item.classList.add('open');
+                }
+            });
+        });
+
+        // Dynamic Year for Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Optional: Hide navbar on scroll down, show on scroll up
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+        window.addEventListener("scroll", function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.style.top = "-120px"; // Hide
+            } else {
+                navbar.style.top = "0"; // Show
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
+    </script>
+</body>
+</html>
